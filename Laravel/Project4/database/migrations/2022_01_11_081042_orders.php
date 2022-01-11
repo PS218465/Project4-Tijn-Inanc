@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Medewerkers extends Migration
+class Orders extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class Medewerkers extends Migration
      */
     public function up()
     {
-        Schema::create('bezoekers', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('voornaam');
-            $table->string('achternaam');
-            $table->string('adres');
-            $table->string('telefoon_nummer');
-            $table->string('postcode');
-            $table->string('stad');
-            $table->integer('points');
+            $table->foreignId('klant_id')->references('id')->on('bezoekers')->onDelete('cascade');
+            $table->string('bestelling'); // "brood,ham,tomaat,brood"
+            $table->string('status');
             $table->timestamps();
             $table->engine = "InnoDB";
         });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Medewerkers extends Migration
+class Roles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,9 @@ class Medewerkers extends Migration
      */
     public function up()
     {
-        Schema::create('bezoekers', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('voornaam');
-            $table->string('achternaam');
-            $table->string('adres');
-            $table->string('telefoon_nummer');
-            $table->string('postcode');
-            $table->string('stad');
-            $table->integer('points');
+            $table->string('name');
             $table->timestamps();
             $table->engine = "InnoDB";
         });
@@ -34,6 +28,6 @@ class Medewerkers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bezoekers');
+        Schema::dropIfExists('roles');
     }
 }
