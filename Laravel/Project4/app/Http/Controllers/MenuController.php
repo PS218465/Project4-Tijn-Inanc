@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\pizza;
 
-class KlantController extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class KlantController extends Controller
      */
     public function index()
     {
-        //
+        return view('menu',['pizzas'=>pizza::all()]);
     }
 
     /**
@@ -45,7 +46,9 @@ class KlantController extends Controller
      */
     public function show($id)
     {
-        //
+        $pizza = pizza::find($id);
+        $inhoud= explode(",", $pizza->ingredienten);
+        return view('menu',['ingredienten' => $inhoud,'Name'=>$pizza]);
     }
 
     /**

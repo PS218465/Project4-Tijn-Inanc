@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\WinkelmandjeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::resource('menu', MenuController::class)->only(['index','show']);
+Route::resource('winkelmandje', WinkelmandjeController::class)->only(['index','show','store','destroy']);
+
+
+
+//----------------------------------------------------------------
 Route::get('/', function () {
     return view('home');
 });
