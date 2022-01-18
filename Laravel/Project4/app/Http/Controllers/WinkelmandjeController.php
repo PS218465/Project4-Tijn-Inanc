@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\winkelmandje;
 use App\Models\User;
+use Facade\Ignition\DumpRecorder\Dump;
 use Illuminate\Support\Facades\Auth;
 
 class WinkelmandjeController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,6 +34,7 @@ class WinkelmandjeController extends Controller
                 $totaalprijs += ($tijdelijkprijs * 1) * $i->stuks;
             }
         }
+        
         return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2)]);
     }
 
@@ -53,6 +56,11 @@ class WinkelmandjeController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'hoeveelheid'=>['required'],
+            'size'=>['required']
+        ]);
+
         $winkelmandje = new winkelmandje();
         $winkelmandje->id =  null;
         $winkelmandje->user_id = Auth::id();
@@ -73,9 +81,15 @@ class WinkelmandjeController extends Controller
      */
     public function show($id)
     {
+        $vlees = ['Bacon', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami'];
+        $groente = ['Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat'];
+        $kaas = ['Mozzarella','Gorgonzola','Parmazaanse','Cheddar'];
+        $swirl = ['Tomatensaus','Sriracha','SweetChili','Knoglook','BBQ','Pesto','Truffel','Teriyaki'];
+        $vis = ['Tonijn'];
         $winkelmandje = winkelmandje::find($id);
         $inhoud= explode(",", $winkelmandje->ingredienten);
-        return view('betalen/winkelwagenshow',['ingredienten' => $inhoud,'Name'=>$winkelmandje]);
+
+        return view('betalen/winkelwagenshow',['ingredienten' => $inhoud,'Name'=>$winkelmandje,'vlees'=>$vlees,'groente'=>$groente,'kaas'=>$kaas,'swirl'=>$swirl,'vis'=>$vis]);
     }
 
     /**
@@ -98,7 +112,67 @@ class WinkelmandjeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //variables voor het uitrekenen van de ingredienten
+        $ingr = "";
+        $ingredienten = ['Tonijn','Bacon','Mozzarella','Gorgonzola','Parmazaanse','Cheddar', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami','Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat','Tomatensaus','Sriracha','SweetChili','Knoglook','BBQ','Pesto','Truffel','Teriyaki'];
+        $first = 1;
+
+        //variables voor het uitrekenen van de prijs
+        $kost = [];
+        $kosten = winkelmandje::find($id)->kosten;
+        $default = intval($request->input('Default'));
+
+
+        // tellen welke ingredienten er zijn bijgekomen
+        for($i = 0; $i < count($ingredienten); $i++){
+            if($request->input($ingredienten[$i])=='1'){
+                array_push($kost, $ingredienten[$i]);
+                if($first==1)
+                {
+                    $ingr .= $ingredienten[$i];
+                    $first++;
+                }
+                else{
+                    $ingr .= ',';
+                    $ingr .= $ingredienten[$i];
+                }
+            }
+            elseif(intval($request->input($ingredienten[$i]))>1){
+                for($l = 0; $l < intval($request->input($ingredienten[$i])); $l++){
+                    array_push($kost, $ingredienten[$i]);
+                    if($first==1)
+                    {
+                        $ingr .= $ingredienten[$i];
+                        $first++;
+                    }
+                    else{ 
+                        $ingr .=',';
+                        $ingr .=$ingredienten[$i];
+                    }
+                }
+            }
+        }
+
+
+        // prijs goed uitrekenen
+        $l = explode("€", winkelmandje::find($id)->kosten);
+        $prijs = floatval($l[0]);
+        $teller = 0 - $default;
+        foreach($kost as $items){
+                $teller++;
+        }
+        if($teller >= 0){
+            $prijs += $teller;
+        }
+       
+        //€ toevoegen
+        $prize= strval($prijs);
+        $prize .= "€";
         
+        // update de database
+        winkelmandje::where('id',$id)
+            ->update(['ingredienten'=>$ingr,'kosten'=>$prize]);
+        return redirect('/winkelmandje');
     }
 
     /**

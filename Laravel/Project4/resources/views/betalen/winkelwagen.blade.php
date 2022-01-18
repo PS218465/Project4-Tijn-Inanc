@@ -9,6 +9,9 @@
 
 </head>
 <body>
+    @if($prijs == 0)
+        <p>Je hebt niks in je winkelmandje zitten</p>
+    @endif
     @foreach($items as $item)
     <div>
         <ul class="flex">
@@ -24,6 +27,23 @@
         </ul>
     </div>
     @endforeach
+    <form action="/bestellen" method="POST">
+    @csrf
+    
     <p>prijs = €{{$prijs}}</p>
+    
+        
+        <!-- hidden -->
+        @php ($lengte = 0)
+        @foreach($items as $item)
+        @php ($lengte++)
+        <input type="hidden" name="naam{{$lengte}}" value="{{$item->naam}}">
+        <input type="hidden" name="ingredienten{{$lengte}}" value="{{$item->ingredienten}}">
+        <input type="hidden" name="stuks{{$lengte}}" value="{{$item->stuks}}">
+        @endforeach
+        <input type="hidden" name="lengte" value="{{$lengte}}">
+        <input type="hidden" name="price" value="{{$prijs}}">
+        <input type="submit" value="bestellen">
+    </form>
 </body>
 </html>

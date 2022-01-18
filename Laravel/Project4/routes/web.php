@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\WinkelmandjeController;
+use App\Http\Controllers\BestellenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::resource('menu', MenuController::class)->only(['index','show']);
-Route::resource('winkelmandje', WinkelmandjeController::class)->only(['index','show','store','destroy']);
+Route::resource('winkelmandje', WinkelmandjeController::class)->only(['index','show','store','destroy','update'])->middleware('auth');
+Route::resource('bestellen', BestellenController::class)->only(['store'])->middleware('auth');
 
 
 
