@@ -1,0 +1,71 @@
+﻿<Window x:Class="stonkspizza.manager.Manager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:stonkspizza.manager"
+        mc:Ignorable="d"
+        Title="Manager" Height="450" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="0"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Column="1" Grid.Row="1" x:Name="LvProduct" BorderThickness="2"  BorderBrush="#FFDDEFFF" ItemsSource="{Binding Pizza}"  Foreground="#FF146F91" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{} {0} {1}">
+                                <Binding Path="Naam"/>
+                                <Binding Path="Kosten"/>
+                        
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Column="3" Grid.Row="1" Background="White" >
+            <TextBlock HorizontalAlignment="Center" FontSize="19" Background="#FF0088FF" Width="283" Foreground="White" Margin="0,0,3,0">MANAGER CRUD</TextBlock>
+            <Button Margin="0,50,0,0" Height="35" Content="maak aan" Width="150" Background="#FF47A6F9" Foreground="white" Click="Button_create">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Margin="0,50,0,0" Height="35" Content="bewerk" Width="150" Background="#FF47A6F9" Foreground="white" Click="Button_bewerk">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <TextBlock Foreground="Blue"><Run Text="_____________________________________________________________" Foreground="Red"/></TextBlock>
+            <Button Margin="0,0,0,0" Height="35" Content="Delete" Width="150" Background="#FFF94747" Foreground="white" Click="Button_delete">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Margin="0,80,03,0" Height="35" Content="Loguit" Width="150" Background="#FF00008F" Foreground="white" Click="Button_bakck" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+    </Grid>
+</Window>
