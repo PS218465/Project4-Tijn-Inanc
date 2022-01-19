@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ingredient;
 use Illuminate\Http\Request;
 use App\Models\pizza;
 
@@ -47,8 +48,7 @@ class MenuController extends Controller
     public function show($id)
     {
         $pizza = pizza::find($id);
-        $inhoud= explode(",", $pizza->ingredienten);
-        return view('menu',['ingredienten' => $inhoud,'Name'=>$pizza]);
+        return view('menu',['ingredienten' => $pizza->ingredients,'Name'=>$pizza]);
     }
 
     /**

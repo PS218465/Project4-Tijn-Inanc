@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\winkelmandje;
 use App\Models\ingredient;
+use App\Models\pizza;
 use App\Models\User;
 use Facade\Ignition\DumpRecorder\Dump;
 use Illuminate\Support\Facades\Auth;
@@ -20,22 +21,21 @@ class WinkelmandjeController extends Controller
     public function index()
     {
         $totaalprijs = 0;
-        $id = winkelmandje::all()->where('user_id', Auth::id());
+        $id = winkelmandje::all()->where('user_id', Auth::id())->where('hidden','==',0);
         foreach($id as $i){
-            $tijdelijkprijs = 0;
-            $l = explode("€", $i->kosten);
-            $tijdelijkprijs += floatval($l[0]);
-            if($i->size == "large"){
-                $totaalprijs += ($tijdelijkprijs * 1.2) * $i->stuks;
-            }
-            elseif($i->size == "small"){
-                $totaalprijs += ($tijdelijkprijs * 0.8) * $i->stuks;
-            }
-            else{
-                $totaalprijs += ($tijdelijkprijs * 1) * $i->stuks;
-            }
+                $tijdelijkprijs = 0;
+                $l = explode("€", $i->kosten);
+                $tijdelijkprijs += floatval($l[0]);
+                if($i->size == "large"){
+                    $totaalprijs += ($tijdelijkprijs * 1.2) * $i->stuks;
+                }
+                elseif($i->size == "small"){
+                    $totaalprijs += ($tijdelijkprijs * 0.8) * $i->stuks;
+                }
+                else{
+                    $totaalprijs += ($tijdelijkprijs * 1) * $i->stuks;
+                }
         }
-        
         return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2)]);
     }
 
@@ -65,11 +65,12 @@ class WinkelmandjeController extends Controller
         $winkelmandje = new winkelmandje();
         $winkelmandje->id =  null;
         $winkelmandje->user_id = Auth::id();
-        $winkelmandje->naam =  $request->input('naam');
-        $winkelmandje->ingredienten =  $request->input('ingredienten');
+        $winkelmandje->pizza_id = $request->input('pizzaid');
         $winkelmandje->stuks =  $request->input('hoeveelheid');
         $winkelmandje->size =  $request->input('size');
         $winkelmandje->kosten =  $request->input('kosten');
+        $winkelmandje->naam =  $request->input('naam');
+        $winkelmandje->hidden =  0;
         $winkelmandje->save();
         return redirect('/menu');
     }

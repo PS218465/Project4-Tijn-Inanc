@@ -15,7 +15,7 @@
     @foreach($items as $item)
     <div>
         <ul class="flex">
-            <li class="flex-1 mr-2"><p>{{$item->naam}} </p></li>
+            <li class="flex-1 mr-2"><p>Pizza {{$item->naam}} </p></li>
             <li class="flex-1 mr-2"><p>{{$item->stuks}} </p></li>
             <li class="flex-1 mr-2"><p>{{$item->size}} </p></li>
             <li class="flex-1 mr-2"><a href="/winkelmandje/{{$item->id}}"><p>ingredienten aanpassen</p></a></li>
@@ -27,6 +27,7 @@
         </ul>
     </div>
     @endforeach
+    @if($prijs > 0)
     <form action="/bestellen" method="POST">
     @csrf
     
@@ -38,12 +39,13 @@
         @foreach($items as $item)
         @php ($lengte++)
         <input type="hidden" name="naam{{$lengte}}" value="{{$item->naam}}">
-        <input type="hidden" name="ingredienten{{$lengte}}" value="{{$item->ingredienten}}">
         <input type="hidden" name="stuks{{$lengte}}" value="{{$item->stuks}}">
         @endforeach
         <input type="hidden" name="lengte" value="{{$lengte}}">
         <input type="hidden" name="price" value="{{$prijs}}">
+        
         <input type="submit" value="bestellen">
     </form>
+    @endif
 </body>
 </html>

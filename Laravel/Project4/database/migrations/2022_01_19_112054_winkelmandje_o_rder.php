@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIngredienten extends Migration
+class WinkelmandjeORder extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateIngredienten extends Migration
      */
     public function up()
     {
-        Schema::create('ingredients', function (Blueprint $table) {
+        Schema::create('winkelmandje_order', function (Blueprint $table) {
             $table->id();
-            $table->string('naam');
-            $table->string('soort');
-            $table->string('unit');
+            $table->foreignId('winkelmandje_id')->references('id')->on('winkelmandjes')->onDelete('cascade');
+            $table->foreignId('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->engine = "InnoDB";
-
         });
     }
 
@@ -30,6 +28,6 @@ class CreateIngredienten extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ingredients');
+        //
     }
 }

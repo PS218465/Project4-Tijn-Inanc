@@ -15,9 +15,10 @@ class CreatePizza extends Migration
     {
         Schema::create('pizzas', function (Blueprint $table) {
             $table->id();
-            $table->string("ingredienten");
             $table->string("naam");
             $table->string("kosten");
+            $table->engine = "InnoDB";
+
         });
     }
 

@@ -39,7 +39,7 @@ class BestellenController extends Controller
     public function store(Request $request)
     {
         
-        $bestelling ="";
+        /*$bestelling ="";
         $lengte = intval($request->input('lengte'));
         for($i=1;$i < intval($request->input('lengte'))+1;$i++){
             $bestelling .= strval($request->input("naam".+strval($i)));
@@ -48,20 +48,29 @@ class BestellenController extends Controller
             $bestelling .= "/";
             $bestelling .= $request->input('stuks'.+strval($i));
             $bestelling .= ";";
-        }
+        }*/
         
-        $bestelling .= $request->input('price');
-        $bestelling .= ">";
+        //$bestelling .= $request->input('price');
+        //$bestelling .= ">";
         $bestellen = new order();
         $bestellen->id =  null;
         $bestellen->klant_id = Auth::id();
-        $bestellen->bestelling =  $bestelling;
         $bestellen->created_at = date("Y-m-d H:i:s");
         $bestellen->updated_at = date("Y-m-d H:i:s");
         
         $bestellen->save();
-        winkelmandje::where("user_id",Auth::id())->delete();
+
+        $order = order::find($bestellen->id);
+        $length = winkelmandje::where('user_id',Auth::id())->where('hidden','==',0)->get();
+        foreach($length as $i){
+            $id = $i->id;
+            $order->winkelmandjes()->attach($id);
+        }
+        
+        winkelmandje::where('user_id',Auth::id())
+            ->update(['hidden'=>1]);
         return redirect('/');
+         
     }
 
     /**
