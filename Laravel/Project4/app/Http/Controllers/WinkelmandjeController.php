@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\winkelmandje;
+use App\Models\ingredient;
 use App\Models\User;
 use Facade\Ignition\DumpRecorder\Dump;
 use Illuminate\Support\Facades\Auth;
@@ -81,13 +82,36 @@ class WinkelmandjeController extends Controller
      */
     public function show($id)
     {
-        $vlees = ['Bacon', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami'];
-        $groente = ['Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat'];
-        $kaas = ['Mozzarella','Gorgonzola','Parmazaanse','Cheddar'];
-        $swirl = ['Tomatensaus','Sriracha','SweetChili','Knoglook','BBQ','Pesto','Truffel','Teriyaki'];
-        $vis = ['Tonijn'];
+        //$vlees = ['Bacon', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami'];
+        $vlees = [];
+        //$groente = ['Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat'];
+        $groente = [];
+       // $kaas = ['Mozzarella','Gorgonzola','Parmazaanse','Cheddar'];
+        $kaas = [];
+       // $swirl = ['Tomatensaus','Sriracha','SweetChili','Knoglook','BBQ','Pesto','Truffel','Teriyaki'];
+        $swirl = [];
+       // $vis = ['Tonijn'];
+        $vis = [];
         $winkelmandje = winkelmandje::find($id);
         $inhoud= explode(",", $winkelmandje->ingredienten);
+        $all = ingredient::all();
+        foreach($all as $i){
+            if($i->soort == 'Vlees'){
+                array_push($vlees,$i->naam);
+            }
+            else if($i->soort == 'Groente'){
+                array_push($groente,$i->naam);
+            }
+            else if($i->soort == 'Kaas'){
+                array_push($kaas,$i->naam);
+            }
+            else if($i->soort == 'Swirl'){
+                array_push($swirl,$i->naam);
+            }
+            else if($i->soort == 'Vis'){
+                array_push($vis,$i->naam);
+            }
+        }
 
         return view('betalen/winkelwagenshow',['ingredienten' => $inhoud,'Name'=>$winkelmandje,'vlees'=>$vlees,'groente'=>$groente,'kaas'=>$kaas,'swirl'=>$swirl,'vis'=>$vis]);
     }
@@ -114,7 +138,12 @@ class WinkelmandjeController extends Controller
     {
         //variables voor het uitrekenen van de ingredienten
         $ingr = "";
-        $ingredienten = ['Tonijn','Bacon','Mozzarella','Gorgonzola','Parmazaanse','Cheddar', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami','Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat','Tomatensaus','Sriracha','SweetChili','Knoglook','BBQ','Pesto','Truffel','Teriyaki'];
+        //$ingredienten = ['Tonijn','Bacon','Mozzarella','Gorgonzola','Parmazaanse','Cheddar', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami','Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat','Tomatensaus','Sriracha','SweetChili','Knoflook','BBQ','Pesto','Truffel','Teriyaki'];
+        $ingredienten = [];
+        $all = ingredient::all();
+        foreach($all as $i){
+            array_push($ingredienten, $i->naam);
+        }
         $first = 1;
 
         //variables voor het uitrekenen van de prijs

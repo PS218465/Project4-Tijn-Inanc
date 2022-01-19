@@ -34,7 +34,7 @@
     @endforeach
 
     <!-- groente -->
-    <p class='text-2xl'>Meat</p> 
+    <p class='text-2xl'>Groente en fruit</p> 
     
     @foreach($groente as $g)  
     @php ($l = 1)
