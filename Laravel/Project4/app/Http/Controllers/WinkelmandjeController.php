@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\winkelmandje;
 use App\Models\ingredient;
+use App\Models\order;
 use App\Models\pizza;
 use App\Models\User;
 use Facade\Ignition\DumpRecorder\Dump;
@@ -36,7 +37,14 @@ class WinkelmandjeController extends Controller
                     $totaalprijs += ($tijdelijkprijs * 1) * $i->stuks;
                 }
         }
-        return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2)]);
+
+        $orders= order::where('klant_id',Auth::id())->get()->first();
+        if($orders != null){
+            return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2),'orders'=>$orders]);
+        }
+        else{
+            return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2)]);
+        }
     }
 
     /**
