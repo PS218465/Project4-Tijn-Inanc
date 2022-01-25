@@ -57,7 +57,7 @@
         <div class="grid text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex flex-col rounded">
             <div class="img"><img class="w-full h-full" src="/img/{{$pizza->naam}}.jpg" alt="" /></div>
             <div class="text p-5 pt-2 text-center">
-                <div class="title font-semibold my-2 text-xl text-red-700"><a class='list-none text-2xl hover:text-black hover:underline' href="/menu/{{$pizza->id}}">{{$pizza->naam}} {{$pizza->kosten}}€</a></div>
+                <div class="title font-semibold my-2 text-xl text-red-700"><a class='list-none text-2xl hover:text-black hover:underline' href="/menu/{{$pizza->id}}">{{$pizza->naam}} €{{$pizza->kosten}}</a></div>
                 <div class="desc">{{$pizza->info}}</div>
             </div>
         </div>

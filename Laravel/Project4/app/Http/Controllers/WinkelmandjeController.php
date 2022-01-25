@@ -21,6 +21,8 @@ class WinkelmandjeController extends Controller
      */
     public function index()
     {
+        $userId = User::find(Auth::id())->first();
+        // dump($userId->pizzapunten);
         $totaalprijs = 0;
         $id = winkelmandje::all()->where('user_id', Auth::id())->where('hidden','==',0);
         foreach($id as $i){
@@ -40,10 +42,10 @@ class WinkelmandjeController extends Controller
 
         $orders= order::where('klant_id',Auth::id())->get()->first();
         if($orders != null){
-            return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2),'orders'=>$orders]);
+            return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2),'orders'=>$orders,'pizzapunten'=>$userId->pizzapunten]);
         }
         else{
-            return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2)]);
+            return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2),'pizzapunten'=>$userId->pizzapunten]);
         }
     }
 

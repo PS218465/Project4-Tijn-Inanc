@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class=' bg-gray-200'>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,8 +9,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
 </head>
+
 <body class="h-screen grid items-center justify-center bg-gray-200">
-<style>
+    <style>
         .bg-image {
             background: url(https://artisanpizzakitchen.com/wp-content/uploads/2018/05/373_photo3.jpg);
             background-size: cover;
@@ -45,7 +47,9 @@
     @if(isset($orders))
     <div class="section font-semibold px-16 text-gray-800 fixed w-full top-12  header_section bg-gray-100 shadow z-10">
         <div class="sub_head">
-            <div class="h_btns text-center text-1xl p-5 text-gray-500"><p>Voordat je nog eens kunt bestellen moet je eerst je huidige <a href="status/{{$orders->klant_id}}" class='cursor-pointer underline hover:text-red-500'>bestelling</a> annuleren.</p></div>
+            <div class="h_btns text-center text-1xl p-5 text-gray-500">
+                <p>Voordat je nog eens kunt bestellen moet je eerst je huidige <a href="status/{{$orders->klant_id}}" class='cursor-pointer underline hover:text-red-500'>bestelling</a> annuleren.</p>
+            </div>
         </div>
     </div>
     @endif
@@ -53,37 +57,53 @@
     <div class='h-screen flex m-auto bg-gray-200'>
         <p class='m-auto text-center text-8xl p-5'>Je hebt niks in je winkelmandje zitten</p>
     </div>
-        @endif
+    @endif
     @if($prijs > 0)
     <div class=" bg-gray-200 flex pt-44 justify-evenly text-center p-5 h-full pt-24 text-gray-800">
         <ul class='font-bold'>
-            <li><p>Pizza:</p></li>
-            <li><p>Aantal:</p></li>
-            <li><p>Grootte:</p></li>
-            <li><p>Ingredienten aanpassen:</p></li>
+            <li>
+                <p>Pizza:</p>
+            </li>
+            <li>
+                <p>Aantal:</p>
+            </li>
+            <li>
+                <p>Grootte:</p>
+            </li>
+            <li>
+                <p>Ingredienten aanpassen:</p>
+            </li>
         </ul>
-    @endif
+        @endif
         @foreach($items as $item)
         <ul>
-            <li><p>Pizza {{$item->naam}} </p></li>
-            <li><p>{{$item->stuks}} </p></li>
-            <li><p>{{$item->size}} </p></li>
-            <li><a href="/winkelmandje/{{$item->id}}" class='underline hover:text-red-500  cursor-pointer m-auto'><p>change</p></a></li>
+            <li>
+                <p>Pizza {{$item->naam}} </p>
+            </li>
+            <li>
+                <p>{{$item->stuks}} </p>
+            </li>
+            <li>
+                <p>{{$item->size}} </p>
+            </li>
+            <li><a href="/winkelmandje/{{$item->id}}" class='underline hover:text-red-500  cursor-pointer m-auto'>
+                    <p>change</p>
+                </a></li>
             <form action="/winkelmandje/{{$item->id}}" method="post" class="hover:underline hover:text-red-500  text-center">
-            @method('delete') 
-            @csrf
-            <input type="submit" value="delete" class="cursor-pointer underline bg-transparent">
+                @method('delete')
+                @csrf
+                <input type="submit" value="delete" class="cursor-pointer underline bg-transparent">
             </form>
         </ul>
-    @endforeach
+        @endforeach
     </div>
     @if($prijs > 0)
     <form action="/bestellen" method="POST" class='grid pb-20 h-full content-center w-screen bg-gray-200'>
-    @csrf
-    
-        <p  class='text-center text-green-600 bold  text-2xl'>€{{$prijs}}</p>
-    
-        
+        @csrf
+
+        <p class='text-center text-green-600 bold  text-2xl'>€{{$prijs}}</p>
+
+
         <!-- hidden -->
         @php ($lengte = 0)
         @foreach($items as $item)
@@ -93,8 +113,23 @@
         @endforeach
         <input type="hidden" name="lengte" value="{{$lengte}}">
         <input type="hidden" name="price" value="{{$prijs}}">
-        
-        <input type="submit" class='p-3 bg-black text-white hover:bg-white hover:text-black rounded cursor-pointer m-auto' value="bestellen">
+
+        @if($pizzapunten > 0)
+        <p class='text-center text-green-600 bold  text-2xl'>Pizza punten: {{$pizzapunten}} </p>
+        <p class='text-center text-gray-600 bold  '>(10 pizza punten is een euro, max 5 euro!)</p>
+        <select class='w-max m-auto text-center' name="aantalPunten">
+            @for($i = 0; $i <= substr($pizzapunten,0,1); $i++) 
+                @if($i > 5)
+                    $i++
+                @else
+                <option class='text-center' value="{{$i*10}}">{{$i*10}}</option>
+                @endif
+            @endfor
+        </select>
+        @endif
+
+
+        <input type="submit" class='p-3 my-1.5 bg-black text-white hover:bg-white hover:text-black rounded cursor-pointer m-auto' value="bestellen">
     </form>
     @endif
     <!-- footer -->
@@ -122,4 +157,5 @@
         </div>
     </div>
 </body>
+
 </html>
