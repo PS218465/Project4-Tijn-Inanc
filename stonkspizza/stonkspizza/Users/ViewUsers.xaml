@@ -62,13 +62,13 @@
             </Button>
 
         </StackPanel>
-        <ListView Grid.Row="1" x:Name="LvUsersrole" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Rolinfo}"  Foreground="#6AD8E3" Margin="0,213,0,66" Background="#575757" Grid.Column="1" SelectionChanged="LvUsersrole_SelectionChanged"  >
+        <ListView Grid.Row="1" x:Name="LvUsersrole" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Rolinfo}"  Foreground="#6AD8E3" Margin="0,213,0,66" Background="#575757" Grid.Column="1"  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
                             <MultiBinding StringFormat=" NAME: {0} ||  ROLE: {1}">
-                                <Binding Path="Name"/>
+                                <Binding Path="Id"/>
                                 <Binding Path="Rolname"/>
                             </MultiBinding>
                         </TextBlock.Text>
@@ -76,6 +76,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <Button x:Name="deleteRole" Grid.Column="3" Margin="0,248,0,66" Grid.Row="1" Click="deleteRole_Click">Delete role</Button>
     </Grid>
 </Window>

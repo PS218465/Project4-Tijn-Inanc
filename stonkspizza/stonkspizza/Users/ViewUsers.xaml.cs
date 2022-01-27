@@ -125,19 +125,26 @@ namespace stonkspizza.Users
             }
         }
 
-        private void LvUsersrole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    
+
+        private void deleteRole_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                
-                LvUsers.SelectedIndex = 0;
-
                 defineroll selectedPizza = ((defineroll)LvUsersrole.SelectedItem);
                 string userrole = selectedPizza.Id.ToString();
                 MessageBox.Show(userrole);
-                //cnn.DeleteRole(userrole);
+                cnn.DeleteRole(userrole);
                 MessageBox.Show("de role is verwijderd");
-            
+
+                              GetUsers z = ((GetUsers)LvUsers.SelectedItem);
+                if (z == null)
+                {
+                    return;
+                }
+                string userrid = z.Id.ToString();
+                Rolinfo = cnn.defineRole(userrid);
 
 
             }
