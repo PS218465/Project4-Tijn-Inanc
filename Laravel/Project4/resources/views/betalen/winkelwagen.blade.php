@@ -116,7 +116,7 @@
 
         @if($pizzapunten > 0)
         <p class='text-center text-green-600 bold  text-2xl'>Pizza punten: {{$pizzapunten}} </p>
-        <p class='text-center text-gray-600 bold  '>(10 pizza punten is een euro, max 5 euro!)</p>
+        <p class='text-center text-gray-600 bold  '>(10 pizza punten is een euro, max 5 euro! per pizza + 10 pizzapunten, max 90)</p>
         <select class='w-max m-auto text-center' name="aantalPunten">
             @for($i = 0; $i <= substr($pizzapunten,0,1); $i++) 
                 @if($i > 5)
