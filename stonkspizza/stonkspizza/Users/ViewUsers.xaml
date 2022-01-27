@@ -1,0 +1,81 @@
+﻿<Window x:Class="stonkspizza.Users.ViewUsers"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:stonkspizza.Users"
+        mc:Ignorable="d"
+        Title="ViewUsers" Height="450" Width="500">
+    <Grid Background="#393939">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="0"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Column="1" Grid.Row="1" x:Name="LvUsers" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Userinfo}"  Foreground="#6AD8E3" Margin="0,5,0,141" Background="#575757" SelectionChanged="LvUsers_SelectionChanged"  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{} NAME: {0} ||  EMAIL: {1}">
+                                <Binding Path="Name"/>
+                                <Binding Path="Email"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock  FontSize="19" Background="#FF0088FF" Width="476" Foreground="White" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Column="1"><Run Text="_____________________klantencrud_________________________"/></TextBlock>
+
+        <StackPanel Grid.Column="3" Grid.Row="1"  Background="#393939" >
+
+            <Button Margin="0,50,0,0" Height="35" Content="maak aan" Width="150" Background="#00C02C" Foreground="white" Click="Button_create">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Margin="0,50,0,0" Height="35" Content="bewerk" Width="150" Background="#FF47A6F9" Foreground="white" Click="Button_bewerk">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <!--<TextBlock Foreground="Blue"><Run Text="_____________________________________________________________" Foreground="Red"/></TextBlock>-->
+            <Button  Height="35" Content="Delete" Width="150" Background="#FFF94747" Foreground="white" Click="Button_delete" Margin="0,20,0,0">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+
+        </StackPanel>
+        <ListView Grid.Row="1" x:Name="LvUsersrole" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Rolinfo}"  Foreground="#6AD8E3" Margin="0,213,0,66" Background="#575757" Grid.Column="1" SelectionChanged="LvUsersrole_SelectionChanged"  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat=" NAME: {0} ||  ROLE: {1}">
+                                <Binding Path="Name"/>
+                                <Binding Path="Rolname"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Window>

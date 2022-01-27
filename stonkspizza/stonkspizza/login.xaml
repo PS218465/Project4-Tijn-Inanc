@@ -1,0 +1,50 @@
+﻿<Window x:Class="stonkspizza.login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:stonkspizza"
+        mc:Ignorable="d"
+        Title="login" Height="450" Width="350"  
+        ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True"  Background="Transparent">
+
+    <Grid Background="#393939"  >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="1" Grid.Row="1">
+            <Image.Source>
+                <BitmapImage  UriSource="Assets/login.png" />
+            </Image.Source>
+        </Image>
+
+        <StackPanel Margin="0,0,0,10" Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Height="184" >
+            <TextBlock Foreground="#30D0FF" Height="22" Margin="5,0,0,0" FontSize="14" ><Run Text="Gebrukersnaam"/></TextBlock>
+            <TextBox x:Name="tbnaam"  BorderThickness="0" Height="20" Background="#C4F2FF"  Margin="5,0,0,0" />
+            <TextBlock Foreground="#30D0FF" Margin="5,0,0,0" FontSize="14"><Run Text="Wachtwoord"/></TextBlock>
+            <TextBox x:Name="tbwachtwoord" BorderThickness="0" Height="20"  Margin="5,2,0,0 "  Background="#C4F2FF" BorderBrush="White"/>
+            <TextBlock x:Name="tbmessage" Foreground="#FF0080F0" Height="57" Text="" Margin="0,10,0,0" HorizontalAlignment="Center" Width="300"/>
+            <Button x:Name="btnlogin" Height="30" Width="100"  Content="Aanmelden " Background="#00B6EB" Click="btnlogin_Click" Foreground="White" BorderBrush="White" RenderTransformOrigin="0.49,1.267" Margin="0,4,0,0" >
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+
+
+
+    </Grid>
+    
+  
+</Window>

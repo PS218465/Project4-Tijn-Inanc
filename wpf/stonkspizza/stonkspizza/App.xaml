@@ -1,9 +1,0 @@
-﻿<Application x:Class="stonkspizza.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:stonkspizza"
-             StartupUri="./manager/Manager.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
-</Application>
