@@ -34,7 +34,7 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <TextBlock  FontSize="19" Background="#FF0088FF" Width="476" Foreground="White" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Column="1"><Run Text="_____________________klantencrud_________________________"/></TextBlock>
+        <TextBlock  FontSize="19" Background="#FF0088FF" TextAlignment="Center" Width="476" Foreground="White" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Column="1"><Run Text="klantencrud"/></TextBlock>
 
         <StackPanel Grid.Column="3" Grid.Row="1"  Background="#393939" >
 

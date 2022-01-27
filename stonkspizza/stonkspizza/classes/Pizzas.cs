@@ -15,13 +15,7 @@ namespace stonkspizza.classes
             get { return id; }
             set { id = value; }
         }
-        private string ingredienten;
 
-        public string Ingredienten
-        {
-            get { return ingredienten; }
-            set { ingredienten = value; }
-        }
         private string naam;
 
         public string Naam

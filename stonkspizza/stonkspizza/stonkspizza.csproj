@@ -101,6 +101,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bestellingen\BestelScherm.xaml.cs">
+      <DependentUpon>BestelScherm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="classes\bestelling.cs" />
+    <Compile Include="classes\bezoekers.cs" />
     <Compile Include="classes\defineroll.cs" />
     <Compile Include="classes\PizzaIngredient.cs" />
     <Compile Include="classes\GetUsers.cs" />
@@ -117,6 +122,10 @@
     <Compile Include="Users\ViewUsers.xaml.cs">
       <DependentUpon>ViewUsers.xaml</DependentUpon>
     </Compile>
+    <Page Include="Bestellingen\BestelScherm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InBeheer\Ingredienten.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,10 +133,6 @@
     <Page Include="login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -140,10 +145,6 @@
     <Compile Include="classes\Role.cs" />
     <Compile Include="login.xaml.cs">
       <DependentUpon>login.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Page Include="manager\Manager.xaml">
       <SubType>Designer</SubType>

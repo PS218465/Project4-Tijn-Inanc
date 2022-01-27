@@ -88,6 +88,7 @@ namespace stonkspizza.classes
             return ocReturnPizzas;
 
         }
+
         ///_________________________________________________________________________________Create Pizza__________________________________________________________________________
         public void CreatePizza(string naam , string kosten)
         {
@@ -334,7 +335,8 @@ namespace stonkspizza.classes
                     Orders order = new Orders();
                     order.Id = Convert.ToInt32(row["id"].ToString());
                     order.Klant_id = Convert.ToInt32(row["klant_id"].ToString());
-                    order.Bestelling = row["bestelling"].ToString();
+                    order.Status = row["status"].ToString();
+                    order.Totaalprijs = row["Totaalprijs"].ToString();
                     ocReturnOrders.Add(order);
                  
                 }
@@ -342,5 +344,82 @@ namespace stonkspizza.classes
                
             }
         }
+        //________________________________________________________________________________________load bezoeker______________________________________________________________________________________
+        public ObservableCollection<bezoekers> infoload(string id)
+        {
+
+            ObservableCollection<bezoekers> ocReturnBezoeker = new ObservableCollection<bezoekers>();
+            DataTable DtOrders = new DataTable();
+
+            using (MySqlConnection con = new MySqlConnection(connString))
+            {
+                con.Open();
+                MySqlCommand command = con.CreateCommand();
+                command.CommandText = "SELECT * FROM `bezoekers` WHERE id = @id;";
+                command.Parameters.AddWithValue("@id", id);
+                MySqlDataReader reader = command.ExecuteReader();
+                DtOrders.Load(reader);
+                foreach (DataRow row in DtOrders.Rows)
+                {
+                    bezoekers bezoeker = new bezoekers();
+                    bezoeker.Id = Convert.ToInt32(row["id"].ToString());
+                    bezoeker.Voornaam = row["voornaam"].ToString();
+                    bezoeker.Achternaam = row["achternaam"].ToString();
+                    bezoeker.Adres = row["adres"].ToString();
+                    bezoeker.Telefoonnummer = row["telefoon_nummer"].ToString();
+                    bezoeker.Postcode = row["postcode"].ToString();
+                    bezoeker.Stad = row["stad"].ToString();
+                    ocReturnBezoeker.Add(bezoeker);
+
+                }
+                return ocReturnBezoeker;
+
+            }
+        }
+            //-----------------------------------------------------------------------------------------------load pizzas
+            public ObservableCollection<bestelling> loadbestelling(string id)
+            {
+                ObservableCollection<bestelling> ocReturnPizzas = new ObservableCollection<bestelling>();
+                DataTable dtPizzas = new DataTable();
+                using (MySqlConnection con = new MySqlConnection(connString))
+                {
+                    con.Open();
+                    MySqlCommand command = con.CreateCommand();
+                    command.CommandText = "SELECT * FROM `winkelmandjes` INNER JOIN orders ON orders.klant_id = winkelmandjes.user_id INNER JOIN pizza_ingredient ON pizza_ingredient.pizza_id = winkelmandjes.pizza_id WHERE klant_id = @id";
+                    command.Parameters.AddWithValue("@id", id);
+                    MySqlDataReader reader = command.ExecuteReader();
+                    dtPizzas.Load(reader);
+
+                }
+                foreach (DataRow row in dtPizzas.Rows)
+                {
+                    bestelling pizzas = new bestelling();
+                    pizzas.Ingredientenid = Convert.ToInt32(row["ingredient_id"].ToString());
+                    ocReturnPizzas.Add(pizzas);
+
+                }
+                return ocReturnPizzas;
+            }
+        /*public ObservableCollection<bestelling> loadall()
+        {
+            ObservableCollection<bestelling> ocReturnPizzas = new ObservableCollection<bestelling>();
+            DataTable ingredienten = new DataTable();
+            bestelling pizzas = new bestelling();
+            foreach (DataRow row in ocReturnPizzas)
+            {
+                using (MySqlConnection con = new MySqlConnection(connString))
+                {
+                    con.Open();
+                    MySqlCommand command = con.CreateCommand();
+                    command.CommandText = "SELECT * FROM `ingredients` WHERE id = @id";
+                    command.Parameters.AddWithValue("@id", pizzas.Ingredientenid);
+                    MySqlDataReader reader = command.ExecuteReader();
+                    ingredienten.Load(reader);
+                }
+                
+            }
+            return ocReturnPizzas;
+        }*/
+
     }
 }

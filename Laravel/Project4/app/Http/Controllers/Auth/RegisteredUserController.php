@@ -67,7 +67,6 @@ class RegisteredUserController extends Controller
             'postcode' => $request->zipcode,
             'stad' => $request->city,
             // Bij aanmaken klant krijgt hij/zij 10 pizza_points
-            'points' => 10,
         ]);
         // **********************************************************************
 

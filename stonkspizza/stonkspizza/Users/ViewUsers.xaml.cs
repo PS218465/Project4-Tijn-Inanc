@@ -121,7 +121,7 @@ namespace stonkspizza.Users
             }
             catch
             {
-
+                MessageBox.Show("er is iets mis gegaan");
             }
         }
 
