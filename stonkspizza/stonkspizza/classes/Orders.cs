@@ -12,6 +12,9 @@ namespace stonkspizza.classes
         private int klant_id;
         private string status;
         private string totaalprijs;
+        private string naam;
+        private int stuks;
+        private int pizza;
 
         //--------------------------------------id
         public int Id
@@ -25,6 +28,12 @@ namespace stonkspizza.classes
             get { return klant_id; }
             set { klant_id = value; }
         }
+        //--------------------------------------klant id
+        public int Pizza
+        {
+            get { return pizza; }
+            set { pizza = value; }
+        }
         //---------------------------------------status
         public string Status
         {
@@ -36,6 +45,17 @@ namespace stonkspizza.classes
         {
             get { return totaalprijs; }
             set { totaalprijs = value; }
+        }
+        //---------------------------------------totaalprijs
+        public string Naam
+        {
+            get { return naam; }
+            set { naam = value; }
+        }//---------------------------------------stuks
+        public int Stuks
+        {
+            get { return stuks; }
+            set { stuks = value; }
         }
     }
 }

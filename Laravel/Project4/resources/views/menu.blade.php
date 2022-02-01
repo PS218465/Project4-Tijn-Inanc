@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="h-screen grid items-center justify-center bg-gray-200">
+<body class="h-screen w-screen grid items-center justify-center bg-gray-200">
     <style>
         .bg-image {
             background: url(https://artisanpizzakitchen.com/wp-content/uploads/2018/05/373_photo3.jpg);
@@ -22,7 +22,7 @@
         }
     </style>
     <!-- navigation -->
-    <div class="section font-semibold px-16 text-gray-800 fixed w-full top-0 flex header_section bg-gray-100 shadow z-10">
+    <div class="section w-screen font-semibold px-16 text-gray-800 fixed w-full top-0 flex header_section bg-gray-100 shadow z-10">
         <div class="sub_head flex my-auto py-3">
             <div class="logo w-14"><img class="w-full" src="/img/stonks.png" alt="" /></div>
             <div class="text ml-2 my-auto flex-none">Pizza Stonks</div>
@@ -45,7 +45,7 @@
     </div>
     <!-- einde -->@if(Auth::check())
     @if(isset($pizzas))
-    <div class="container italic bg-gray-200 font-semibold text-3xl text-center p-5 pt-24 text-gray-800 "><a class='hover:text-red-500' href="/menu">Pizza's</a></div>
+    <div class="container m-auto w-screen italic bg-gray-200 font-semibold text-3xl text-center p-5 pt-24 text-gray-800 "><a class='hover:text-red-500' href="/menu">Pizza's</a></div>
     @endif
     @endif
     <!-- index -->

@@ -23,20 +23,22 @@
                 <DataTemplate>
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{} Klant_id: {0} || Status: {1} || Totaalprijs: €{2}">
-                                <Binding Path="Klant_id"/>
+                            <MultiBinding StringFormat="{} order: {0} || Pizza {1} ||Status: {2} || Totaalprijs: €{3}|| stuks: {4}">
+                                <Binding Path="Id"/>
+                                <Binding Path="Naam"/>
                                 <Binding Path="Status"/>
                                 <Binding Path="Totaalprijs"/>
+                                <Binding Path="Stuks"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" x:Name="LvBezoeker" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Bezoeker}"  Foreground="#6AD8E3"  Margin="10" Background="#575757" SelectionChanged="LVbestellingen"  >
+        <ListView  Grid.Row="2" Grid.Column="1" SelectionChanged="select" Grid.ColumnSpan="1" x:Name="LvBezoeker" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Bezoeker}"  Foreground="#6AD8E3"  Margin="10" Background="#575757"   >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock TextAlignment="Center">
+                    <TextBlock TextAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}{0} | {1} &#x0a; {2} | {3} &#x0a; {4} | {5}">
                                 <Binding Path="Voornaam"/>
@@ -51,18 +53,21 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView  Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" x:Name="lvBestellings" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Pizza}"  Foreground="#6AD8E3"  Margin="10" Background="#575757" SelectionChanged="LVbestellingen"  >
+        <ListView  Grid.Row="1" Grid.Column="2"  Grid.RowSpan="2" x:Name="lvBestellings" BorderThickness="2"  BorderBrush="#FF0088FF" ItemsSource="{Binding Pizza}"  Foreground="#6AD8E3"  Margin="10" Background="#575757" SelectionChanged="select"  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBlock TextAlignment="Center">
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0}">
-                                <Binding Path="ingredient"/>
+                            <MultiBinding StringFormat=" {0}">
+                                <Binding Path="Ingredient"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+
+        <Button Click="statusClick" Grid.Row="2" Height="25" Width="230" HorizontalAlignment="Left" Margin="10" FontSize="15" Background="Green" VerticalAlignment="Top">status veranderen</Button>
+        <Button Click="DeleteClick" Grid.Row="2" Height="25" Width="230" HorizontalAlignment="Left" Margin="10,70,0,0" Background="Red" FontSize="15" VerticalAlignment="Top">Rond bestelling af</Button>
     </Grid>
 </Window>

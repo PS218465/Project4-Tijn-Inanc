@@ -15,16 +15,16 @@ namespace stonkspizza.classes
             get { return ingredientenid; }
             set { ingredientenid = value; }
         }
-        private int ingredient;
+        private string ingredient;
 
-        public int Ingredient
+        public string Ingredient
         {
             get { return ingredient; }
             set { ingredient = value; }
         }
-        private int naam;
+        private string naam;
 
-        public int Naam
+        public string Naam
         {
             get { return naam; }
             set { naam = value; }

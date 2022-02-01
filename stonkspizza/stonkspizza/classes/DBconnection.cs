@@ -327,7 +327,7 @@ namespace stonkspizza.classes
             {
                 con.Open();
                 MySqlCommand command = con.CreateCommand();
-                command.CommandText = "SELECT * FROM `orders`;";
+                command.CommandText = "SELECT * FROM `orders` INNER JOIN winkelmandjes ON orders.klant_id = winkelmandjes.user_id";
                 MySqlDataReader reader = command.ExecuteReader();
                 DtOrders.Load(reader);
                 foreach(DataRow row in DtOrders.Rows)
@@ -337,6 +337,9 @@ namespace stonkspizza.classes
                     order.Klant_id = Convert.ToInt32(row["klant_id"].ToString());
                     order.Status = row["status"].ToString();
                     order.Totaalprijs = row["Totaalprijs"].ToString();
+                    order.Naam = row["naam"].ToString();
+                    order.Stuks = Convert.ToInt32(row["stuks"].ToString());
+                    order.Pizza = Convert.ToInt32(row["pizza_id"].ToString());
                     ocReturnOrders.Add(order);
                  
                 }
@@ -377,7 +380,7 @@ namespace stonkspizza.classes
             }
         }
             //-----------------------------------------------------------------------------------------------load pizzas
-            public ObservableCollection<bestelling> loadbestelling(string id)
+            public ObservableCollection<bestelling> loadbestelling(string id, string pizzaid)
             {
                 ObservableCollection<bestelling> ocReturnPizzas = new ObservableCollection<bestelling>();
                 DataTable dtPizzas = new DataTable();
@@ -385,41 +388,77 @@ namespace stonkspizza.classes
                 {
                     con.Open();
                     MySqlCommand command = con.CreateCommand();
-                    command.CommandText = "SELECT * FROM `winkelmandjes` INNER JOIN orders ON orders.klant_id = winkelmandjes.user_id INNER JOIN pizza_ingredient ON pizza_ingredient.pizza_id = winkelmandjes.pizza_id WHERE klant_id = @id";
+                    command.CommandText = "SELECT * FROM winkelmandjes a JOIN pizza_ingredient b ON a.pizza_id = b.pizza_id JOIN ingredients c ON b.ingredient_id = c.id WHERE user_id = @id AND a.pizza_id = @pizzaid";
                     command.Parameters.AddWithValue("@id", id);
-                    MySqlDataReader reader = command.ExecuteReader();
+                    command.Parameters.AddWithValue("@pizzaid", pizzaid);
+                MySqlDataReader reader = command.ExecuteReader();
                     dtPizzas.Load(reader);
 
                 }
+                int i = 0;
                 foreach (DataRow row in dtPizzas.Rows)
                 {
                     bestelling pizzas = new bestelling();
                     pizzas.Ingredientenid = Convert.ToInt32(row["ingredient_id"].ToString());
+                    if (i == 0)
+                    {
+                        pizzas.Naam = "Pizza "+row["naam"].ToString();
+                    }
+                    pizzas.Ingredient = row["ingredient"].ToString();
+                    i++;
                     ocReturnPizzas.Add(pizzas);
 
                 }
-                return ocReturnPizzas;
+                return ocReturnPizzas;/*
+                                       
+                                       ingredient table heb ik naam veranderd naar ingredient!!!!!!!!!!!!!!
+                                       
+                                       
+                                       */
             }
-        /*public ObservableCollection<bestelling> loadall()
+        public string GetStatus(string id, string select)
         {
-            ObservableCollection<bestelling> ocReturnPizzas = new ObservableCollection<bestelling>();
-            DataTable ingredienten = new DataTable();
-            bestelling pizzas = new bestelling();
-            foreach (DataRow row in ocReturnPizzas)
+            string status = null;
+            using (MySqlConnection con = new MySqlConnection(connString))
             {
-                using (MySqlConnection con = new MySqlConnection(connString))
-                {
-                    con.Open();
-                    MySqlCommand command = con.CreateCommand();
-                    command.CommandText = "SELECT * FROM `ingredients` WHERE id = @id";
-                    command.Parameters.AddWithValue("@id", pizzas.Ingredientenid);
-                    MySqlDataReader reader = command.ExecuteReader();
-                    ingredienten.Load(reader);
-                }
-                
+                con.Open();
+                MySqlCommand command = con.CreateCommand();
+                command.CommandText = "SELECT "+select+" FROM `orders` WHERE id = @id";
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@status", select);
+                status = command.ExecuteScalar().ToString();
             }
-            return ocReturnPizzas;
-        }*/
-
+            return status;
+        }
+        public bool updateStatus(string id, string status)
+        {
+            bool succes = false;
+            using (MySqlConnection con = new MySqlConnection(connString))
+            {
+                con.Open();
+                MySqlCommand command = con.CreateCommand();
+                command.CommandText = "UPDATE orders SET status = @status WHERE id = id";
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@status", status);
+                int nrOfRowsAffected = command.ExecuteNonQuery();
+                succes = (nrOfRowsAffected != 0);
+            }
+            return succes;
+        }
+        public bool deleteOrder(string klantid)//verwijder uit winkelwagen en orders
+        {
+            bool succes = false;
+            using (MySqlConnection con = new MySqlConnection(connString))
+            {
+                con.Open();
+                MySqlCommand command = con.CreateCommand();
+                command.CommandText = "UPDATE orders SET status = @status WHERE id = id";
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@status", status);
+                int nrOfRowsAffected = command.ExecuteNonQuery();
+                succes = (nrOfRowsAffected != 0);
+            }
+            return succes;
+        }
     }
 }

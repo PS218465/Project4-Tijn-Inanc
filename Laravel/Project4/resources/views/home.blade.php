@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
-<body class="h-screen grid items-center justify-center ">
+<body class="h-screen grid w-screen overflow-x-hidden items-center justify-center ">
     <style>
         .bg-image {
             background: url(https://artisanpizzakitchen.com/wp-content/uploads/2018/05/373_photo3.jpg);
             background-size: cover;
             background-repeat: no-repeat;
+            width: 100%;
         }
 
         body {
@@ -51,7 +52,7 @@
     </div>
     @endif
     <!-- einde -->
-    <div class="container bg-image flex overflow-hidden h-screen text-gray-800">
+    <div class="container m-auto bg-gray-200 bg-image flex overflow-hidden h-screen text-gray-800">
         <div class="hero bg-gray-200 text-center grid md:grid-cols-2 border w-4/6 m-auto p-8 bg-opacity-90 rounded-lg">
             <img class="icon m-auto rounded-lg" src="/img/stonks.png" alt="" />
             <div class="text m-auto text-lg md:ml-5 p-5 md:text-left">
@@ -61,7 +62,7 @@
         </div>
     </div>
     <!-- einde -->
-    <div class="container italic bg-gray-200 font-semibold text-3xl text-center p-5 pt-24 text-gray-800"><a class='hover:text-red-500' href="/menu">Onze favorieten pizza's</a></div>
+    <div class="container m-auto italic bg-gray-200 font-semibold text-3xl text-center p-5 pt-24 text-gray-800"><a class='hover:text-red-500' href="/menu">Onze favorieten pizza's</a></div>
     <div class="bg-gray-200 section cards mx-auto border grid md:grid-cols-3 md:px-12 bg-gray-200 text-gray-800">
         <div class="grid text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex flex-col rounded">
             <div class="img"><img class="w-full h-full" src="/img/Hawai.jpg" alt="" /></div>
@@ -90,7 +91,7 @@
 
     </div>
     <!-- footer -->
-    <div class="heading_section bg-red-600 text-gray-300">
+    <div class="heading_section w-screen bg-red-600 text-gray-300">
         <div class="footer w-5/6 mx-auto text-center">
             <div class="sub flex-1 p-8">
                 <div class="text-3xl mb-3 uppercase">Contact Us</div>

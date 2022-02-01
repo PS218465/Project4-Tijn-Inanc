@@ -1,0 +1,19 @@
+﻿<Window x:Class="stonkspizza.Bestellingen.status"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:stonkspizza.Bestellingen"
+        mc:Ignorable="d"
+        Title="status" Height="300" Width="200">
+    <Grid Background="#393939">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock  FontSize="19" Background="#FF0088FF" TextAlignment="Center" Width="476" Foreground="White" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Column="0" ><Run Text="Status"/></TextBlock>
+        <TextBox Grid.Row="1" Name="informatie" Height="20" Margin="5" ></TextBox>
+        <Button Grid.Row="2" Name="save" Height="20" Margin="5" Click="save_Click" >Save</Button>
+    </Grid>
+</Window>

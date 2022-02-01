@@ -77,11 +77,53 @@ namespace stonkspizza.Bestellingen
         {
             Orders selectedPerson = ((Orders)LvUsers.SelectedItem);
             string iserId = selectedPerson.Klant_id.ToString();
+            string pizza = selectedPerson.Pizza.ToString();
             //cnn.infoload.(iserId);
             Bezoeker = cnn.infoload(iserId);
 
-            Pizza = cnn.loadbestelling(iserId);
-            Pizza = cnn.loadAll();
+            Pizza = cnn.loadbestelling(iserId, pizza);
+        }
+
+        private void statusClick(object sender, RoutedEventArgs e)
+        {
+            if (LvUsers.SelectedItems.Count > 0)
+            {
+                Orders selectedPerson = ((Orders)LvUsers.SelectedItem);
+                string orderid = selectedPerson.Id.ToString();
+                status status = new status(orderid);
+                status.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("je moet een order selecteren!");
+            }
+        }
+
+        private void select(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvBestellings.SelectedIndex != -1) lvBestellings.SelectedIndex = -1;
+            else if (LvBezoeker.SelectedIndex != -1) LvBezoeker.SelectedIndex = -1;
+        }
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if (LvUsers.SelectedItems.Count > 0)
+            {
+                Orders selectedPerson = ((Orders)LvUsers.SelectedItem);
+                string orderid = selectedPerson.Klant_id.ToString();
+                if (cnn.deleteOrder(orderid))
+                {
+                    MessageBox.Show($"order verwijderd");
+                }
+                else
+                {
+                    MessageBox.Show($"verwijderen mislukt");
+                }
+            }
+            else
+            {
+                MessageBox.Show("je moet een order selecteren!");
+            }
         }
     }
 }

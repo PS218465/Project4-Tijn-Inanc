@@ -104,6 +104,9 @@
     <Compile Include="Bestellingen\BestelScherm.xaml.cs">
       <DependentUpon>BestelScherm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Bestellingen\status.xaml.cs">
+      <DependentUpon>status.xaml</DependentUpon>
+    </Compile>
     <Compile Include="classes\bestelling.cs" />
     <Compile Include="classes\bezoekers.cs" />
     <Compile Include="classes\defineroll.cs" />
@@ -123,6 +126,10 @@
       <DependentUpon>ViewUsers.xaml</DependentUpon>
     </Compile>
     <Page Include="Bestellingen\BestelScherm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Bestellingen\status.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

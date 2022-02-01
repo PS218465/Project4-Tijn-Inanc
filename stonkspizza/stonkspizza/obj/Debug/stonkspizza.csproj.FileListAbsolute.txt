@@ -112,3 +112,5 @@ C:\Users\tijnk\Desktop\Project 4\Project4-Tijn-Inanc\stonkspizza\stonkspizza\obj
 C:\Users\tijnk\Desktop\Project 4\Project4-Tijn-Inanc\stonkspizza\stonkspizza\obj\Debug\stonkspizza.pdb
 C:\Users\tijnk\Desktop\Project 4\Project4-Tijn-Inanc\stonkspizza\stonkspizza\obj\Debug\Bestellingen\BestelScherm.g.cs
 C:\Users\tijnk\Desktop\Project 4\Project4-Tijn-Inanc\stonkspizza\stonkspizza\obj\Debug\Bestellingen\BestelScherm.baml
+C:\Users\tijnk\Desktop\Project 4\Project4-Tijn-Inanc\stonkspizza\stonkspizza\obj\Debug\Bestellingen\status.g.cs
+C:\Users\tijnk\Desktop\Project 4\Project4-Tijn-Inanc\stonkspizza\stonkspizza\obj\Debug\Bestellingen\status.baml
