@@ -10,7 +10,7 @@
 
 </head>
 
-<body class="h-screen grid items-center justify-center bg-gray-200">
+<body class="h-screen grid overflow-x-hidden items-center justify-center bg-gray-200">
     <style>
         .bg-image {
             background: url(https://artisanpizzakitchen.com/wp-content/uploads/2018/05/373_photo3.jpg);

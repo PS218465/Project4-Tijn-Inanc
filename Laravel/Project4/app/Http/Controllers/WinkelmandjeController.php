@@ -21,7 +21,7 @@ class WinkelmandjeController extends Controller
      */
     public function index()
     {
-        $userId = User::find(Auth::id())->first();
+        $userId = User::find(Auth::id());
         // dump($userId->pizzapunten);
         $totaalprijs = 0;
         $id = winkelmandje::all()->where('user_id', Auth::id())->where('hidden','==',0);

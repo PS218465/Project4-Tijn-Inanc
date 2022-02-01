@@ -75,13 +75,16 @@ namespace stonkspizza.Bestellingen
         }
         private void LVbestellingen(object sender, SelectionChangedEventArgs e)
         {
-            Orders selectedPerson = ((Orders)LvUsers.SelectedItem);
-            string iserId = selectedPerson.Klant_id.ToString();
-            string pizza = selectedPerson.Pizza.ToString();
-            //cnn.infoload.(iserId);
-            Bezoeker = cnn.infoload(iserId);
+            if (LvUsers.SelectedIndex != -1)
+            {
+                Orders selectedPerson = ((Orders)LvUsers.SelectedItem);
+                string iserId = selectedPerson.Klant_id.ToString();
+                string pizza = selectedPerson.Pizza.ToString();
+                //cnn.infoload.(iserId);
+                Bezoeker = cnn.infoload(iserId);
 
-            Pizza = cnn.loadbestelling(iserId, pizza);
+                Pizza = cnn.loadbestelling(iserId, pizza);
+            }
         }
 
         private void statusClick(object sender, RoutedEventArgs e)
@@ -113,11 +116,16 @@ namespace stonkspizza.Bestellingen
                 string orderid = selectedPerson.Klant_id.ToString();
                 if (cnn.deleteOrder(orderid))
                 {
-                    MessageBox.Show($"order verwijderd");
+                    MessageBox.Show("order afgerond!");
+                    Pizza.Clear();
+                    Bezoeker.Clear();
+                    LvUsers.SelectedIndex = -1;
+                    Order.Clear();
+                    loadOrders();
                 }
                 else
                 {
-                    MessageBox.Show($"verwijderen mislukt");
+                    MessageBox.Show("verwijderen mislukt");
                 }
             }
             else

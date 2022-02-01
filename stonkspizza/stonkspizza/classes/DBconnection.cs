@@ -452,9 +452,8 @@ namespace stonkspizza.classes
             {
                 con.Open();
                 MySqlCommand command = con.CreateCommand();
-                command.CommandText = "UPDATE orders SET status = @status WHERE id = id";
-                command.Parameters.AddWithValue("@id", id);
-                command.Parameters.AddWithValue("@status", status);
+                command.CommandText = "DELETE FROM orders WHERE klant_id = @id; DELETE FROM winkelmandjes WHERE user_id = @id";
+                command.Parameters.AddWithValue("@id", klantid);
                 int nrOfRowsAffected = command.ExecuteNonQuery();
                 succes = (nrOfRowsAffected != 0);
             }
