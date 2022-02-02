@@ -89,7 +89,7 @@
                 <input type="hidden" name="naam" value="{{$Name->naam}}">
                 <input type="hidden" name="kosten" value="{{$Name->kosten}}">
                 <!--  -->
-                <input name="hoeveelheid" type="text" placeholder="Hoeveel..."> <br>
+                <input name="hoeveelheid" type="number" min='1' placeholder="Hoeveel..."> <br>
                 <input type="submit" class='p-3 bg-black text-white hover:bg-white hover:text-black rounded cursor-pointer m-auto' value="aan winkelmandje toevoegen">
             </div>
         </form>

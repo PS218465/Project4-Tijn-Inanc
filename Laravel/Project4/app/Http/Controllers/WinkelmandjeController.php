@@ -21,25 +21,27 @@ class WinkelmandjeController extends Controller
      */
     public function index()
     {
+        // zoek de ingelogde user
         $userId = User::find(Auth::id());
-        // dump($userId->pizzapunten);
         $totaalprijs = 0;
+        // zoek items die gedisplayed moeten worden (de items die op hidden staan mogen niet gedisplayed worden omdat die al besteld zijn)
         $id = winkelmandje::all()->where('user_id', Auth::id())->where('hidden','==',0);
         foreach($id as $i){
+                // reken prijs uit
                 $tijdelijkprijs = 0;
                 $l = explode("€", $i->kosten);
                 $tijdelijkprijs += floatval($l[0]);
-                if($i->size == "large"){
+                if($i->size == "large"){ // bij large prijs x 1.2
                     $totaalprijs += ($tijdelijkprijs * 1.2) * $i->stuks;
                 }
-                elseif($i->size == "small"){
+                elseif($i->size == "small"){ // bij small prijs x 0.8
                     $totaalprijs += ($tijdelijkprijs * 0.8) * $i->stuks;
                 }
                 else{
                     $totaalprijs += ($tijdelijkprijs * 1) * $i->stuks;
                 }
         }
-
+        // check of user heeft besteld
         $orders= order::where('klant_id',Auth::id())->get()->first();
         if($orders != null){
             return view('betalen/winkelwagen',['items'=>$id, 'prijs'=>round($totaalprijs, 2),'orders'=>$orders,'pizzapunten'=>$userId->pizzapunten]);
@@ -67,11 +69,13 @@ class WinkelmandjeController extends Controller
      */
     public function store(Request $request)
     {
+        // bestel validatie check of user aantal en grootte van de pizza in heeft gevuld
         $request->validate([
             'hoeveelheid'=>['required'],
             'size'=>['required']
         ]);
 
+        // voeg toe aan Winkelmandje table
         $winkelmandje = new winkelmandje();
         $winkelmandje->id =  null;
         $winkelmandje->user_id = Auth::id();
@@ -93,38 +97,8 @@ class WinkelmandjeController extends Controller
      */
     public function show($id)
     {
-        //$vlees = ['Bacon', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami'];
-        $vlees = [];
-        //$groente = ['Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat'];
-        $groente = [];
-       // $kaas = ['Mozzarella','Gorgonzola','Parmazaanse','Cheddar'];
-        $kaas = [];
-       // $swirl = ['Tomatensaus','Sriracha','SweetChili','Knoglook','BBQ','Pesto','Truffel','Teriyaki'];
-        $swirl = [];
-       // $vis = ['Tonijn'];
-        $vis = [];
-        $winkelmandje = winkelmandje::find($id);
-        $inhoud= explode(",", $winkelmandje->ingredienten);
-        $all = ingredient::all();
-        foreach($all as $i){
-            if($i->soort == 'Vlees'){
-                array_push($vlees,$i->naam);
-            }
-            else if($i->soort == 'Groente'){
-                array_push($groente,$i->naam);
-            }
-            else if($i->soort == 'Kaas'){
-                array_push($kaas,$i->naam);
-            }
-            else if($i->soort == 'Swirl'){
-                array_push($swirl,$i->naam);
-            }
-            else if($i->soort == 'Vis'){
-                array_push($vis,$i->naam);
-            }
-        }
-
-        return view('betalen/winkelwagenshow',['ingredienten' => $inhoud,'Name'=>$winkelmandje,'vlees'=>$vlees,'groente'=>$groente,'kaas'=>$kaas,'swirl'=>$swirl,'vis'=>$vis]);
+        $Data = winkelmandje::find($id);
+        return view('betalen/winkelwagenshow', ["Data"=>$Data]);
     }
 
     /**
@@ -147,71 +121,13 @@ class WinkelmandjeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //variables voor het uitrekenen van de ingredienten
-        $ingr = "";
-        //$ingredienten = ['Tonijn','Bacon','Mozzarella','Gorgonzola','Parmazaanse','Cheddar', 'Chicken', 'Ham', 'Pepperoni','Gehakt','Shoarma','Doner','Salami','Ananas','Broccoli','Champignon','Maïs','Olijven','Ui','Paprika','Sla','Tomaat','Tomatensaus','Sriracha','SweetChili','Knoflook','BBQ','Pesto','Truffel','Teriyaki'];
-        $ingredienten = [];
-        $all = ingredient::all();
-        foreach($all as $i){
-            array_push($ingredienten, $i->naam);
-        }
-        $first = 1;
-
-        //variables voor het uitrekenen van de prijs
-        $kost = [];
-        $kosten = winkelmandje::find($id)->kosten;
-        $default = intval($request->input('Default'));
-
-
-        // tellen welke ingredienten er zijn bijgekomen
-        for($i = 0; $i < count($ingredienten); $i++){
-            if($request->input($ingredienten[$i])=='1'){
-                array_push($kost, $ingredienten[$i]);
-                if($first==1)
-                {
-                    $ingr .= $ingredienten[$i];
-                    $first++;
-                }
-                else{
-                    $ingr .= ',';
-                    $ingr .= $ingredienten[$i];
-                }
-            }
-            elseif(intval($request->input($ingredienten[$i]))>1){
-                for($l = 0; $l < intval($request->input($ingredienten[$i])); $l++){
-                    array_push($kost, $ingredienten[$i]);
-                    if($first==1)
-                    {
-                        $ingr .= $ingredienten[$i];
-                        $first++;
-                    }
-                    else{ 
-                        $ingr .=',';
-                        $ingr .=$ingredienten[$i];
-                    }
-                }
-            }
-        }
-
-
-        // prijs goed uitrekenen
-        $l = explode("€", winkelmandje::find($id)->kosten);
-        $prijs = floatval($l[0]);
-        $teller = 0 - $default;
-        foreach($kost as $items){
-                $teller++;
-        }
-        if($teller >= 0){
-            $prijs += $teller;
-        }
-       
-        //€ toevoegen
-        $prize= strval($prijs);
-        $prize .= "€";
-        
-        // update de database
+        //check als de gebruiker alles heeft ingevuld
+        $request->validate([
+            'size'=>['required'],
+            'hoeveelheid'=>['required'],
+        ]);
         winkelmandje::where('id',$id)
-            ->update(['ingredienten'=>$ingr,'kosten'=>$prize]);
+            ->update(['stuks'=>$request->input('hoeveelheid'),'size'=>$request->input('size')]);
         return redirect('/winkelmandje');
     }
 
@@ -223,6 +139,7 @@ class WinkelmandjeController extends Controller
      */
     public function destroy($id)
     {
+        // verwijderen van item in winkelmandje
         winkelmandje::destroy($id);
         return redirect('/winkelmandje');
     }

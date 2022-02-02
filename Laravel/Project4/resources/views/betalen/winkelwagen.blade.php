@@ -87,7 +87,7 @@
                 <p>{{$item->size}} </p>
             </li>
             <li><a href="/winkelmandje/{{$item->id}}" class='underline hover:text-red-500  cursor-pointer m-auto'>
-                    <p>change</p>
+                    <p>Aanpassen</p>
                 </a></li>
             <form action="/winkelmandje/{{$item->id}}" method="post" class="hover:underline hover:text-red-500  text-center">
                 @method('delete')

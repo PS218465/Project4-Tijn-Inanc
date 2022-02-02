@@ -1,114 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class='bg-gray-200'>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <title>Aanpassen</title>
 </head>
-<body>
-<p class="text-4xl pb-3">Je ingrediënten aanpassen!</p>
-<p class="text-gray-400 text-2xl pb-3">(elk ingrediënt komt er 1 euro bij!)</p>
-@php ($price=$Name->kosten)
-<p class="text-3xl">Pizza {{$Name->naam}}</p>
-<!-- meat -->
-    <p class='text-2xl'>Meat</p> 
-    <form action="/winkelmandje/{{$Name->id}}" method="POST">
-    @method('patch') 
-    @csrf
-    @foreach($vlees as $v)  
-    @php ($l = 1)
-        <div class='rounded-b-sm border-b-2 flex w-1/4 items-center justify-between'>
-            <p>{{$v}}</p>
-            @for($i = 0; $i < count($ingredienten); $i++)
-                @if($ingredienten[$i] == $v)
-                <input min="0" max='5' value="1" name='{{$v}}' type="number">
-                @php ($l++)
-                @endif
-            @endfor
-            @if($l==1)
-                <input min="0" max='5' value="0" name='{{$v}}' type="number">
-            @endif
-        </div>
-    @endforeach
 
-    <!-- groente -->
-    <p class='text-2xl'>Groente en fruit</p> 
-    
-    @foreach($groente as $g)  
-    @php ($l = 1)
-        <div class='rounded-b-sm border-b-2 flex w-1/4 items-center justify-between'>
-            <p>{{$g}}</p>
-            @for($i = 0; $i < count($ingredienten); $i++)
-                @if($ingredienten[$i] == $g)
-                <input min="0" max='5' value="1" name='{{$g}}' type="number">
-                @php ($l++)
-                @endif
-            @endfor
-            @if($l==1)
-                <input min="0" max='5' value="0" name='{{$g}}' type="number">
-            @endif
-        </div>
-    @endforeach
 
-    <!-- kaas -->
-    <p class='text-2xl'>Kaas</p> 
-    
-    @foreach($kaas as $k)  
-    @php ($l = 1)
-        <div class='rounded-b-sm border-b-2 flex w-1/4 items-center justify-between'>
-            <p>{{$k}} kaas</p>
-            @for($i = 0; $i < count($ingredienten); $i++)
-                @if($ingredienten[$i] == $k)
-                <input min="0" max='5' value="1" name='{{$k}}' type="number">
-                @php ($l++)
-                @endif
-            @endfor
-            @if($l==1)
-                <input min="0" max='5' value="0" name='{{$k}}' type="number">
+<body class="h-screen w-screen grid items-center justify-center bg-gray-200">
+    <style>
+        .bg-image {
+            background: url(https://artisanpizzakitchen.com/wp-content/uploads/2018/05/373_photo3.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        body {
+            background: white !important;
+        }
+    </style>
+    <!-- navigation -->
+    <div class="section w-screen font-semibold px-16 text-gray-800 fixed w-full top-0 flex header_section bg-gray-100 shadow z-10">
+        <div class="sub_head flex my-auto py-3">
+            <div class="logo w-14"><img class="w-full" src="/img/stonks.png" alt="" /></div>
+            <div class="text ml-2 my-auto flex-none">Pizza Stonks</div>
+        </div>
+        <div class="sub_head ml-auto flex space-x-8 my-auto">
+            <div class="h_btns cursor-pointer"><a href="/">Home</a></div>
+            <div class="h_btns cursor-pointer"><a href="/menu">Menu</a></div>
+            <div class="h_btns cursor-pointer "><a href="/winkelmandje">winkelmandje</a></div>
+            @if(Auth::check())
+            <div class="h_btns cursor-pointer">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">uitloggen</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+            @else
+            <div class="h_btns cursor-pointer"><a href="/login">Login</a></div>
             @endif
         </div>
-    @endforeach
-    <!-- swirl -->
-    <p class='text-2xl'>Swirl</p> 
-    
-    @foreach($swirl as $s)  
-    @php ($l = 1)
-        <div class='rounded-b-sm border-b-2 flex w-1/4 items-center justify-between'>
-            <p>{{$s}} swirl</p>
-            @for($i = 0; $i < count($ingredienten); $i++)
-                @if($ingredienten[$i] == $s)
-                <input min="0" max='5' value="1" name='{{$s}}' type="number">
-                @php ($l++)
-                @endif
-            @endfor
-            @if($l==1)
-                <input min="0" max='5' value="0" name='{{$s}}' type="number">
-            @endif
+    </div>
+    <!--show below-->
+    @if(isset($Data))
+    <div class=" bg-gray-200 section cards mx-auto border w-screen h-screen grid  md:px-12 bg-gray-200 text-gray-800 rounded">
+        <form class="m-auto" action="/winkelmandje/{{$Data->id}}" method="POST">
+            <div class="p-5 grid text-sm shadow-lg max-w-sm m-5 mx-auto sm:mx-auto md:m-5 overflow-hidden flex h-full rounded bg-gray-200">
+                @method('patch')
+                @csrf
+                <div class="text p-5 pt-2 text-center">
+                    <div class="title font-semibold my-2 text-xl text-red-700">
+                        <p class="text-3xl">Pizza {{$Data->naam}} €{{$Data->kosten}}</p>
+                    </div>
+                </div>
+
+                <select name="size">
+                    <option value="small">Small</option>
+                    <option selected="selected" value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+                <!-- hidden -->
+                <input type="hidden" name="id" value="{{$Data->id}}">
+                <input type="hidden" name="pizzaid" value="{{$Data->pizza_id}}">
+                <!--  -->
+                <input name="hoeveelheid" type="number" min='1' placeholder="Hoeveel..."> <br>
+                <input type="submit" class='p-3 bg-black text-white hover:bg-white hover:text-black rounded cursor-pointer m-auto' value="product aanpassen">
+            </div>
+        </form>
+    @endif
+    </div>
+    <!-- footer -->
+    <div class="heading_section bg-red-600 text-gray-300">
+        <div class="footer w-5/6 mx-auto text-center">
+            <div class="sub flex-1 p-8">
+                <div class="text-3xl mb-3 uppercase">Contact Us</div>
+                <div class="info">
+                    <div class="name">Stonks</div>
+                    <div class="name text-sm">
+                        weert single 45<br>
+                        city weert nederland limburg<br>
+                        postcode 4353 RE <br>
+                        Phone Number 951-634-4557 <br>
+                        Mobile Number 951-903-8940
+                    </div>
+                </div>
+            </div>
+            <div class="sub flex p-5 w-5/6 mx-auto border-t">
+                <div class="cursor-pointer hover:underline items mx-auto">Over ons</div>
+                <div class="cursor-pointer hover:underline items mx-auto">Policy</div>
+                <div class="cursor-pointer hover:underline items mx-auto">Locaties</div>
+                <div class="cursor-pointer hover:underline items mx-auto"><a href="/BestDev">Developer</a></div>
+            </div>
         </div>
-    @endforeach
-    <!-- vis -->
-    <p class='text-2xl'>vis</p> 
-    
-    @foreach($vis as $v)  
-    @php ($l = 1)
-        <div class='rounded-b-sm border-b-2 flex w-1/4 items-center justify-between'>
-            <p>{{$v}}</p>
-            @for($i = 0; $i < count($ingredienten); $i++)
-                @if($ingredienten[$i] == $v)
-                <input min="0" max='5' value="1" name='{{$v}}' type="number">
-                @php ($l++)
-                @endif
-            @endfor
-            @if($l==1)
-                <input min="0" max='5' value="0" name='{{$v}}' type="number">
-            @endif
-        </div>
-    @endforeach
-    <input type="hidden" name="Default" value="{{count($ingredienten)}}">
-    <!-- <p class="text-4xl text-green-400 text-center w-1/4">{{$price}}</p> -->
-    <br><input type="submit"> 
-    </form>
+    </div>
 </body>
 </html>
