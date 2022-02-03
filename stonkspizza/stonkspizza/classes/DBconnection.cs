@@ -327,7 +327,7 @@ namespace stonkspizza.classes
             {
                 con.Open();
                 MySqlCommand command = con.CreateCommand();
-                command.CommandText = "SELECT * FROM `orders` INNER JOIN winkelmandjes ON orders.klant_id = winkelmandjes.user_id";
+                command.CommandText = "SELECT * FROM `orders` INNER JOIN winkelmandjes ON orders.klant_id = winkelmandjes.user_id WHERE hidden = 1";
                 MySqlDataReader reader = command.ExecuteReader();
                 DtOrders.Load(reader);
                 foreach(DataRow row in DtOrders.Rows)

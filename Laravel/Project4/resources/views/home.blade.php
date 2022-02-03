@@ -88,7 +88,6 @@
             </div>
         </div>
 
-
     </div>
     <!-- footer -->
     <div class="heading_section w-screen bg-red-600 text-gray-300">
