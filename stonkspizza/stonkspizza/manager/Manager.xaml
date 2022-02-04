@@ -67,6 +67,13 @@
                     </Style>
                 </Button.Resources>
             </Button>
+            <Button  Height="35" Content="Ga terug" Width="150" Background="#FFF94747" Foreground="white"  Margin="0,20,0,0" Click="Button_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
         </StackPanel>
 

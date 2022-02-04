@@ -46,30 +46,10 @@ namespace stonkspizza
             }
             else
             {
-                tbmessage.Text = "";
-                string userid = login.Id.ToString();
-                Role role = cnn.role(userid);
-                string verify = role.Role_id.ToString();
-                switch (verify)
-                {
-                    case "1":
+                Window1 win = new Window1();
+                win.Show();
+                this.Close();
 
-                        break;
-                    case "2":
-
-                        break;
-                    case "3":
-                        manager.Manager win = new manager.Manager();
-                        win.Show();
-                        this.Close();
-                        break;
-                    case "4":
-                        
-                        break;
-                    case "5":
-
-                        break;
-                }
             }
           
 

@@ -133,5 +133,12 @@ namespace stonkspizza.Bestellingen
                 MessageBox.Show("je moet een order selecteren!");
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window1 win = new Window1();
+            win.Show();
+            this.Close();
+        }
     }
 }
