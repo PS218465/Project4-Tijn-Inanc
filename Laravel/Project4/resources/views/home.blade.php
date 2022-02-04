@@ -47,7 +47,9 @@
     @if(isset($orders))
     <div class="section font-semibold px-16 text-gray-800 fixed w-full top-12  header_section bg-gray-100 shadow z-10">
         <div class="sub_head">
-            <div class="h_btns text-center text-4xl p-5 "><p>volg de <a href="/status/{{$orders->klant_id}}" class='cursor-pointer underline hover:text-red-500'>status</a> van je bestelling!</p></div>
+            <div class="h_btns text-center text-4xl p-5 ">
+                <p>volg de <a href="/status/{{$orders->klant_id}}" class='cursor-pointer underline hover:text-red-500'>status</a> van je bestelling!</p>
+            </div>
         </div>
     </div>
     @endif
@@ -112,7 +114,7 @@
                 <div class="cursor-pointer hover:underline items mx-auto"><a href="/BestDev">Developer</a></div>
             </div>
         </div>
-    </div>  
+    </div>
 
 </body>
 
